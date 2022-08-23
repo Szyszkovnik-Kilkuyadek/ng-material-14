@@ -8,13 +8,8 @@
   (cdkDropListDropped)="drop($event)"
   [cdkDropListDisabled]="dragDisabled"
 >
-  <!-- <tbody
-    cdkDropList
-    (cdkDropListDropped)="drop($event)"
-    [class.dragging]="dragging"
-  > -->
   <!-- Checkbox Column -->
-  <ng-container matColumnDef="select" sticky>
+  <ng-container matColumnDef="select">
     <mat-header-cell *matHeaderCellDef>
       <mat-checkbox
         (change)="$event ? masterToggle() : null"
@@ -56,22 +51,10 @@
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row
     *matRowDef="let row; columns: displayedColumns"
-    [class.selected]="selection.isSelected(row)"
     [cdkDragDisabled]="!selection.isSelected(row)"
     cdkDrag
     [cdkDragData]="selection.selected"
     (cdkDragStarted)="onDragStarted($event, row)"
   >
-    <div
-      *cdkDragPreview
-      [matBadge]="selection.selected.length || 1"
-      matBadgeOverlap="false"
-    >
-      <tr
-        style="width: 200px; height: 100px"
-        mat-row
-        *ngFor="let item of selection.selected"
-      ></tr>
-    </div>
   </mat-row>
 </mat-table>
