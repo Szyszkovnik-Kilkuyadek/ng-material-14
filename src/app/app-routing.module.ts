@@ -2,38 +2,49 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './auth/auth.guard';
-
+import { DensityComponent } from './density/density.component';
 
 const routes: Routes = [
   {
+    path: 'dense',
+    component: DensityComponent,
+  },
+  {
     path: '',
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
     canActivate: [AuthGuard],
-    data: { role: ['admin'] }
+    data: { role: ['admin'] },
   },
   {
     path: 'secret-dashboard',
-    loadChildren: () => import('./secret-dashboard/secret-dashboard.module').then(m => m.SecretDashboardModule),
-    canActivate: [AuthGuard]
+    loadChildren: () =>
+      import('./secret-dashboard/secret-dashboard.module').then(
+        (m) => m.SecretDashboardModule
+      ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'dragndrop',
-    loadChildren: () =>import('./dragndrop/dragndrop.module').then(m => m.DragndropModule),
-  }
+    loadChildren: () =>
+      import('./dragndrop/dragndrop.module').then((m) => m.DragndropModule),
+  },
 ];
 
-export const getRedirectUrl = (url: string): string | null => new URLSearchParams(url.slice(1)).get('redirectUrl');
+export const getRedirectUrl = (url: string): string | null =>
+  new URLSearchParams(url.slice(1)).get('redirectUrl');
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
